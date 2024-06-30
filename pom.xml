@@ -47,6 +47,12 @@
         <!-- The -load option is a shortcut for or -output=type=docker -->
         <!-- Could be changed by the -push option !-->
         <container.build.extraarg>--load</container.build.extraarg>
+
+        <dockerhub.username>davidunir945</dockerhub.username>
+        <dockerhub.repository>tfm-external-test</dockerhub.repository>
+        <!--suppress UnresolvedMavenProperty -->
+<!--        <dockerhub.password>${env.DOCKERHUB_PASSWORD}</dockerhub.password> &lt;!&ndash; Mejor usar variables de entorno para la contraseña &ndash;&gt;-->
+        <dockerhub.password>BKfZA%V3o$!hfb</dockerhub.password> <!-- Mejor usar variables de entorno para la contraseña -->
     </properties>
 
     <dependencyManagement>
@@ -162,8 +168,41 @@
                                             <argument>${container.platform}</argument>
                                             <argument>${container.build.extraarg}</argument>
                                             <argument>-t</argument>
-                                            <argument>${docker.image.prefix}/${project.artifactId}</argument>
+                                            <argument>${dockerhub.username}/${dockerhub.repository}:${project.version}</argument> <!-- Etiqueta correcta -->
+<!--                                            <argument>${docker.image.prefix}/${project.artifactId}</argument>-->
                                             <argument>${project.build.directory}</argument>
+                                        </arguments>
+                                    </configuration>
+                                </execution>
+
+                                <execution>
+                                    <id>docker-login</id>
+                                    <phase>install</phase>
+                                    <goals>
+                                        <goal>exec</goal>
+                                    </goals>
+                                    <configuration>
+                                        <executable>${container.executable}</executable>
+                                        <arguments>
+                                            <argument>login</argument>
+                                            <argument>-u</argument>
+                                            <argument>${dockerhub.username}</argument>
+                                            <argument>-p</argument>
+                                            <argument>${dockerhub.password}</argument>
+                                        </arguments>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>docker-push</id>
+                                    <phase>install</phase>
+                                    <goals>
+                                        <goal>exec</goal>
+                                    </goals>
+                                    <configuration>
+                                        <executable>${container.executable}</executable>
+                                        <arguments>
+                                            <argument>push</argument>
+                                            <argument>${dockerhub.username}/${dockerhub.repository}:${project.version}</argument>
                                         </arguments>
                                     </configuration>
                                 </execution>

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   config-server:
-    image: springcommunity/spring-petclinic-config-server
+    image: davidunir945/spring-petclinic-config-server-test
     container_name: config-server
     deploy:
       resources:
@@ -17,7 +17,7 @@ services:
      - 8888:8888
 
   discovery-server:
-    image: springcommunity/spring-petclinic-discovery-server
+    image: davidunir945/spring-petclinic-discovery-server-test
     container_name: discovery-server
     deploy:
       resources:
@@ -35,7 +35,7 @@ services:
      - 8761:8761
 
   customers-service:
-    image: springcommunity/spring-petclinic-customers-service
+    image: davidunir945/spring-petclinic-customers-test
     container_name: customers-service
     deploy:
       resources:
@@ -50,7 +50,7 @@ services:
     - 8081:8081
 
   visits-service:
-    image: springcommunity/spring-petclinic-visits-service
+    image: davidunir945/spring-petclinic-visits-test
     container_name: visits-service
     deploy:
       resources:
@@ -65,7 +65,7 @@ services:
      - 8082:8082
 
   vets-service:
-    image: springcommunity/spring-petclinic-vets-service
+    image: davidunir945/spring-petclinic-vets-test
     container_name: vets-service
     deploy:
       resources:
@@ -80,7 +80,7 @@ services:
      - 8083:8083
 
   api-gateway:
-    image: springcommunity/spring-petclinic-api-gateway
+    image: davidunir945/spring-petclinic-api-gateway-test
     container_name: api-gateway
     deploy:
       resources:
@@ -107,7 +107,7 @@ services:
      - 9411:9411
 
   admin-server:
-    image: springcommunity/spring-petclinic-admin-server
+    image: davidunir945/spring-petclinic-admin-server-test
     container_name: admin-server
     deploy:
       resources:

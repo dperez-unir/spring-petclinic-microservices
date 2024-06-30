@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework.samples.petclinic.api</groupId>
@@ -22,6 +22,9 @@
         <wro4j.version>1.8.0</wro4j.version>
         <docker.image.exposed.port>8081</docker.image.exposed.port>
         <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
+        <dockerhub.username>davidunir945</dockerhub.username>
+        <dockerhub.repository>spring-petclinic-api-gateway-test</dockerhub.repository>
+        <dockerhub.password>BKfZA%V3o$!hfb</dockerhub.password>
     </properties>
 
     <dependencies>
@@ -190,6 +193,106 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>docker-build</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${container.executable}</executable>
+                                    <workingDirectory>${docker.image.dockerfile.dir}</workingDirectory>
+                                    <arguments>
+                                        <argument>build</argument>
+                                        <argument>-f</argument>
+                                        <argument>Dockerfile</argument>
+                                        <argument>--build-arg</argument>
+                                        <argument>ARTIFACT_NAME=${project.build.finalName}</argument>
+                                        <argument>--build-arg</argument>
+                                        <argument>EXPOSED_PORT=${docker.image.exposed.port}</argument>
+                                        <argument>--platform</argument>
+                                        <argument>${container.platform}</argument>
+                                        <argument>${container.build.extraarg}</argument>
+                                        <argument>-t</argument>
+                                        <argument>${dockerhub.username}/${dockerhub.repository}:${project.version}</argument> <!-- Etiqueta correcta -->
+                                        <argument>${project.build.directory}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>docker-build-latest</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${container.executable}</executable>
+                                    <workingDirectory>${docker.image.dockerfile.dir}</workingDirectory>
+                                    <arguments>
+                                        <argument>build</argument>
+                                        <argument>-f</argument>
+                                        <argument>Dockerfile</argument>
+                                        <argument>--build-arg</argument>
+                                        <argument>ARTIFACT_NAME=${project.build.finalName}</argument>
+                                        <argument>--build-arg</argument>
+                                        <argument>EXPOSED_PORT=${docker.image.exposed.port}</argument>
+                                        <argument>--platform</argument>
+                                        <argument>${container.platform}</argument>
+                                        <argument>${container.build.extraarg}</argument>
+                                        <argument>-t</argument>
+                                        <argument>${dockerhub.username}/${dockerhub.repository}:latest</argument> <!-- Nueva etiqueta -->
+                                        <argument>${project.build.directory}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>docker-login</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${container.executable}</executable>
+                                    <arguments>
+                                        <argument>login</argument>
+                                        <argument>-u</argument>
+                                        <argument>${dockerhub.username}</argument>
+                                        <argument>-p</argument>
+                                        <argument>${dockerhub.password}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>docker-push</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${container.executable}</executable>
+                                    <arguments>
+                                        <argument>push</argument>
+                                        <argument>${dockerhub.username}/${dockerhub.repository}:${project.version}</argument> <!-- Etiqueta correcta -->
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>docker-push-latest</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${container.executable}</executable>
+                                    <arguments>
+                                        <argument>push</argument>
+                                        <argument>${dockerhub.username}/${dockerhub.repository}:latest</argument> <!-- Etiqueta correcta -->
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
