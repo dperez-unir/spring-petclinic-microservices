@@ -7,8 +7,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-         }
-     }
 }
