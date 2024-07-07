@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customers-service
+  template:
+    metadata:
+      labels:
+        app: customers-service
+    spec:
+      containers:
+        - name: customers-service
+          image: davidunir945/spring-petclinic-customers-test
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: "512Mi"
