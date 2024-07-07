@@ -24,7 +24,6 @@
         <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
         <dockerhub.username>davidunir945</dockerhub.username>
         <dockerhub.repository>spring-petclinic-api-gateway-test</dockerhub.repository>
-        <dockerhub.password>BKfZA%V3o$!hfb</dockerhub.password>
     </properties>
 
     <dependencies>
@@ -260,7 +259,6 @@
                                         <argument>-u</argument>
                                         <argument>${dockerhub.username}</argument>
                                         <argument>-p</argument>
-                                        <argument>${dockerhub.password}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
