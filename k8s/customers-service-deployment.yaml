@@ -17,6 +17,9 @@ spec:
           image: davidunir945/spring-petclinic-customers-test
           ports:
             - containerPort: 8081
+          env:
+          - name: CONFIG_SERVER_URL
+            value: "http://config-server:8888"            
           resources:
             limits:
               memory: "512Mi"

@@ -13,16 +13,29 @@ spec:
         app: discovery-server
     spec:
       containers:
-        - name: discovery-server
-          image: davidunir945/spring-petclinic-discovery-server-test
-          ports:
-            - containerPort: 8761
-          resources:
-            limits:
-              memory: "512Mi"
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8761
-            initialDelaySeconds: 5
-            periodSeconds: 5
+      - name: discovery-server
+        image: davidunir945/spring-petclinic-discovery-server-test
+        ports:
+        - containerPort: 8761
+        env:
+        - name: CONFIG_SERVER_URL
+          value: "http://config-server:8888"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8761
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8761
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          limits:
+            memory: "512Mi"
