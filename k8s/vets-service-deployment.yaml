@@ -1,0 +1,27 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vets-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vets-service
+  template:
+    metadata:
+      labels:
+        app: vets-service
+    spec:
+      containers:
+      - name: vets-service
+        image: davidunir945/spring-petclinic-vets-test
+        ports:
+        - containerPort: 8083
+        env:
+        - name: CONFIG_SERVER_URL
+          value: "http://config-server:8888"        
+        resources:
+          limits:
+            memory: "512Mi"
+
