@@ -13,14 +13,25 @@ spec:
         app: grafana-server
     spec:
       containers:
-      - name: grafana-server
-        image: grafana/grafana
-        ports:
-        - containerPort: 3000
-        env:
-        - name: CONFIG_SERVER_URL
-          value: "http://config-server:8888"        
-        resources:
-          limits:
-            memory: "256Mi"
-
+        - name: grafana-server
+          image: grafana/grafana
+          ports:
+            - containerPort: 3000
+          env:
+            - name: CONFIG_SERVER_URL
+              value: "http://config-server:8888"
+          resources:
+            limits:
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-server
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: grafana-server

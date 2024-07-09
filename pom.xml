@@ -51,6 +51,7 @@
         <dockerhub.username>davidunir945</dockerhub.username>
         <dockerhub.repository>tfm-external-test</dockerhub.repository>
         <!--suppress UnresolvedMavenProperty -->
+        <dockerhub.password>dckr_pat_h4JdCXIoLpzBAPZcw_nAL-ne0Qc</dockerhub.password> <!-- Mejor usar variables de entorno para la contraseña -->
     </properties>
 
     <dependencyManagement>
@@ -186,6 +187,7 @@
                                             <argument>-u</argument>
                                             <argument>${dockerhub.username}</argument>
                                             <argument>-p</argument>
+                                            <argument>${dockerhub.password}</argument>
                                         </arguments>
                                     </configuration>
                                 </execution>

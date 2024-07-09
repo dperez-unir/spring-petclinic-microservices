@@ -18,8 +18,22 @@ spec:
           ports:
             - containerPort: 8081
           env:
-          - name: CONFIG_SERVER_URL
-            value: "http://config-server:8888"            
+            - name: CONFIG_SERVER_URL
+              value: "http://config-server:8888"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://discovery-server:8761/eureka/"
           resources:
             limits:
               memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customers-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8081
+      targetPort: 8081
+  selector:
+    app: customers-service

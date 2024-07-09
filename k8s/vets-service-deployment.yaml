@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,14 +13,27 @@ spec:
         app: vets-service
     spec:
       containers:
-      - name: vets-service
-        image: davidunir945/spring-petclinic-vets-test
-        ports:
-        - containerPort: 8083
-        env:
-        - name: CONFIG_SERVER_URL
-          value: "http://config-server:8888"        
-        resources:
-          limits:
-            memory: "512Mi"
-
+        - name: vets-service
+          image: davidunir945/spring-petclinic-vets-test
+          ports:
+            - containerPort: 8083
+          env:
+            - name: CONFIG_SERVER_URL
+              value: "http://config-server:8888"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://discovery-server:8761/eureka/"
+          resources:
+            limits:
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vets-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8083
+      targetPort: 8083
+  selector:
+    app: vets-service

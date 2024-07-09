@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,17 +13,23 @@ spec:
         app: tracing-server
     spec:
       containers:
-      - name: tracing-server
-        image: openzipkin/zipkin
-        ports:
-        - containerPort: 9411
-        env:
-        - name: CONFIG_SERVER_URL
-          value: "http://config-server:8888"        
-        resources:
-          limits:
-            memory: "512Mi"
-        env:
-        - name: JAVA_OPTS
-          value: "-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom"
-
+        - name: tracing-server
+          image: openzipkin/zipkin
+          ports:
+            - containerPort: 9411
+          resources:
+            limits:
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tracing-server
+spec:
+  type: NodePort
+  ports:
+    - port: 9411
+      targetPort: 9411
+      nodePort: 30082
+  selector:
+    app: tracing-server

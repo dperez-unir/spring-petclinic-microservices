@@ -13,14 +13,27 @@ spec:
         app: visits-service
     spec:
       containers:
-      - name: visits-service
-        image: davidunir945/spring-petclinic-visits-test
-        ports:
-        - containerPort: 8082
-        env:
-        - name: CONFIG_SERVER_URL
-          value: "http://config-server:8888"        
-        resources:
-          limits:
-            memory: "512Mi"
-
+        - name: visits-service
+          image: davidunir945/spring-petclinic-visits-service-test
+          ports:
+            - containerPort: 8082
+          env:
+            - name: CONFIG_SERVER_URL
+              value: "http://config-server:8888"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://discovery-server:8761/eureka/"
+          resources:
+            limits:
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visits-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8082
+      targetPort: 8082
+  selector:
+    app: visits-service
