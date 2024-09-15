@@ -89,7 +89,3 @@ kubectl delete -f tracing-server-deployment.yaml
 kubectl delete -f admin-server-deployment.yaml
 kubectl delete -f grafana-server-deployment.yaml
 kubectl delete -f prometheus-server-deployment.yaml
-
-
-dckr_pat_h4JdCXIoLpzBAPZcw_nAL-ne0Qc
-dckr_pat_TQ7aHPrnSeTN09kHcLCYGLwX01o
