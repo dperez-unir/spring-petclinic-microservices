@@ -141,4 +141,4 @@ services:
         limits:
           memory: 256M
     ports:
-    - 9091:9090
+    - 9091:9091

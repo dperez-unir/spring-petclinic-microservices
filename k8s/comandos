@@ -1,68 +1,3 @@
-kubectl apply -f discovery-server-deployment.yaml
-kubectl apply -f discovery-server-service.yaml
-
-kubectl apply -f config-server-deployment.yaml
-kubectl apply -f config-server-service.yaml
-
-kubectl apply -f api-gateway-deployment.yaml
-kubectl apply -f api-gateway-service.yaml
-
-kubectl apply -f customers-service-deployment.yaml
-kubectl apply -f customers-service-service.yaml
-
-kubectl apply -f visits-service-deployment.yaml
-kubectl apply -f visits-service-service.yaml
-
-kubectl apply -f vets-service-deployment.yaml
-kubectl apply -f vets-service-service.yaml
-
-
-kubectl apply -f tracing-server-deployment.yaml
-kubectl apply -f tracing-server-service.yaml
-
-kubectl apply -f admin-server-deployment.yaml
-kubectl apply -f admin-server-service.yaml
-
-kubectl apply -f grafana-server-deployment.yaml
-kubectl apply -f grafana-server-service.yaml
-
-kubectl apply -f prometheus-server-deployment.yaml
-kubectl apply -f prometheus-server-service.yaml
-
-
-
-kubectl delete -f discovery-server-deployment.yaml
-kubectl delete -f discovery-server-service.yaml
-
-kubectl delete -f config-server-deployment.yaml
-kubectl delete -f config-server-service.yaml
-
-kubectl delete -f api-gateway-deployment.yaml
-kubectl delete -f api-gateway-service.yaml
-
-kubectl delete -f customers-service-deployment.yaml
-kubectl delete -f customers-service-service.yaml
-
-kubectl delete -f visits-service-deployment.yaml
-kubectl delete -f visits-service-service.yaml
-
-kubectl delete -f vets-service-deployment.yaml
-kubectl delete -f vets-service-service.yaml
-
-
-kubectl delete -f tracing-server-deployment.yaml
-kubectl delete -f tracing-server-service.yaml
-
-kubectl delete -f admin-server-deployment.yaml
-kubectl delete -f admin-server-service.yaml
-
-kubectl delete -f grafana-server-deployment.yaml
-kubectl delete -f grafana-server-service.yaml
-
-kubectl delete -f prometheus-server-deployment.yaml
-kubectl delete -f prometheus-server-service.yaml
-
-
 kubectl apply -f config-server-deployment.yaml
 kubectl apply -f discovery-server-deployment.yaml
 
@@ -72,7 +7,6 @@ kubectl apply -f tracing-server-deployment.yaml
 kubectl apply -f prometheus-server-deployment.yaml
 kubectl apply -f grafana-server-deployment.yaml
 
-
 kubectl apply -f customers-service-deployment.yaml
 kubectl apply -f visits-service-deployment.yaml
 kubectl apply -f vets-service-deployment.yaml
@@ -81,15 +15,15 @@ kubectl apply -f api-gateway-deployment.yaml
 
 kubectl delete -f config-server-deployment.yaml
 kubectl delete -f discovery-server-deployment.yaml
+kubectl delete -f admin-server-deployment.yaml
 kubectl delete -f api-gateway-deployment.yaml
 kubectl delete -f customers-service-deployment.yaml
 kubectl delete -f visits-service-deployment.yaml
 kubectl delete -f vets-service-deployment.yaml
 kubectl delete -f tracing-server-deployment.yaml
-kubectl delete -f admin-server-deployment.yaml
 kubectl delete -f grafana-server-deployment.yaml
 kubectl delete -f prometheus-server-deployment.yaml
 
 
-dckr_pat_h4JdCXIoLpzBAPZcw_nAL-ne0Qc
+token-dockerhub
 dckr_pat_TQ7aHPrnSeTN09kHcLCYGLwX01o
