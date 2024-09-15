@@ -89,3 +89,6 @@ kubectl delete -f tracing-server-deployment.yaml
 kubectl delete -f admin-server-deployment.yaml
 kubectl delete -f grafana-server-deployment.yaml
 kubectl delete -f prometheus-server-deployment.yaml
+
+
+## prueba de compilación automática tras commit
