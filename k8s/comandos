@@ -1,3 +1,5 @@
+kind create cluster --config kind-cfg.yaml
+
 kubectl apply -f config-server-deployment.yaml
 kubectl apply -f discovery-server-deployment.yaml
 
