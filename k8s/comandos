@@ -25,5 +25,9 @@ kubectl delete -f grafana-server-deployment.yaml
 kubectl delete -f prometheus-server-deployment.yaml
 
 
+<<<<<<< HEAD
 token-dockerhub
 dckr_pat_TQ7aHPrnSeTN09kHcLCYGLwX01o
+=======
+## prueba de compilación automática tras commit
+>>>>>>> 1a6b90bc6123be3aca1c2f4eb6b41b0618c9de3d
