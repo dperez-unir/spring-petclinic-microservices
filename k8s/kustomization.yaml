@@ -1,14 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-metadata:
-  name: petclinic-kustomization
-  namespace: flux-system
-spec:
-  force: true
-  interval: 1m0s
-  path: ./k8s/
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: spring-petclinic-config
-  wait: true
+resources:
+  - config-server-deployment.yaml
+images:
+  - name: docker.io/davidunir945/spring-petclinic-config-server-test
+    newTag: 3.2.15
