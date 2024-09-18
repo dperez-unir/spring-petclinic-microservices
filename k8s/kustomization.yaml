@@ -6,7 +6,7 @@ metadata:
 spec:
   force: true
   interval: 1m0s
-  path: ./flux/
+  path: ./k8s/
   prune: true
   sourceRef:
     kind: GitRepository

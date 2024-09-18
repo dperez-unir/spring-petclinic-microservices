@@ -9,7 +9,7 @@ spec:
     kind: GitRepository
     name: spring-petclinic-config
   update:
-    path: ./flux/
+    path: ./k8s/
     strategy: Setters
   git:
     checkout:
