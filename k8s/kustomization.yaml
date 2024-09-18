@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: petclinic-kustomization
+  namespace: flux-system
+spec:
+  force: true
+  interval: 1m0s
+  path: ./flux/
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: spring-petclinic-config
+  wait: true
