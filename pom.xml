@@ -11,7 +11,7 @@
 
     <groupId>org.springframework.samples</groupId>
     <artifactId>spring-petclinic-microservices</artifactId>
-    <version>3.2.15</version>
+    <version>3.2.16</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
 
@@ -257,6 +257,9 @@
                             </goals>
                             <configuration>
                                 <target>
+                                    <delete includeEmptyDirs="true">
+                                        <fileset dir="${replacement.dir}/k8s"/>
+                                    </delete>
                                     <copy todir="${replacement.dir}/k8s">
                                         <fileset dir="${replacement.dir}/templates" includes="*.yaml"/>
                                     </copy>

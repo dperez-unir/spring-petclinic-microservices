@@ -2,14 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: discovery-server
-  namespace: default
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
   selector:
     matchLabels:
       app: discovery-server
@@ -17,14 +11,10 @@ spec:
     metadata:
       labels:
         app: discovery-server
-      annotations:
-        fluxcd.io/automated: "true"
-        fluxcd.io/image-ref.discovery-server: "discovery-server-policy"
     spec:
       containers:
         - name: discovery-server
           image: davidunir945/spring-petclinic-discovery-server-test:%IMAGE_VERSION%
-          imagePullPolicy: Always
           ports:
             - containerPort: 8761
           resources:

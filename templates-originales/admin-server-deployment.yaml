@@ -2,14 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: admin-server
-  namespace: default
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
   selector:
     matchLabels:
       app: admin-server
@@ -17,14 +11,10 @@ spec:
     metadata:
       labels:
         app: admin-server
-      annotations:
-        fluxcd.io/automated: "true"
-        fluxcd.io/image-ref.admin-server: "admin-server-policy"
     spec:
       containers:
         - name: admin-server
           image: davidunir945/spring-petclinic-admin-server-test:%IMAGE_VERSION%
-          imagePullPolicy: Always
           ports:
             - containerPort: 9090
           env:

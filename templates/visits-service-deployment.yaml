@@ -2,8 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: visits-service
+  namespace: default
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   selector:
     matchLabels:
       app: visits-service
@@ -11,10 +17,14 @@ spec:
     metadata:
       labels:
         app: visits-service
+      annotations:
+        fluxcd.io/automated: "true"
+        fluxcd.io/image-ref.visits-service: "visits-service-policy"
     spec:
       containers:
         - name: visits-service
           image: davidunir945/spring-petclinic-visits-test:%IMAGE_VERSION%
+          imagePullPolicy: Always
           ports:
             - containerPort: 8082
           env:

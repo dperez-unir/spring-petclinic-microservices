@@ -1,0 +1,35 @@
+kind create cluster --config kind-cfg.yaml
+
+kubectl apply -f config-server-deployment.yaml
+kubectl apply -f discovery-server-deployment.yaml
+
+kubectl apply -f admin-server-deployment.yaml
+
+kubectl apply -f tracing-server-deployment.yaml
+kubectl apply -f prometheus-server-deployment.yaml
+kubectl apply -f grafana-server-deployment.yaml
+
+kubectl apply -f customers-service-deployment.yaml
+kubectl apply -f visits-service-deployment.yaml
+kubectl apply -f vets-service-deployment.yaml
+
+kubectl apply -f api-gateway-deployment.yaml
+
+kubectl delete -f config-server-deployment.yaml
+kubectl delete -f discovery-server-deployment.yaml
+kubectl delete -f admin-server-deployment.yaml
+kubectl delete -f api-gateway-deployment.yaml
+kubectl delete -f customers-service-deployment.yaml
+kubectl delete -f visits-service-deployment.yaml
+kubectl delete -f vets-service-deployment.yaml
+kubectl delete -f tracing-server-deployment.yaml
+kubectl delete -f grafana-server-deployment.yaml
+kubectl delete -f prometheus-server-deployment.yaml
+
+
+<<<<<<< HEAD
+token-dockerhub
+dckr_pat_TQ7aHPrnSeTN09kHcLCYGLwX01o
+=======
+## prueba de compilación automática tras commit
+>>>>>>> 1a6b90bc6123be3aca1c2f4eb6b41b0618c9de3d

@@ -2,14 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: config-server
-  namespace: default
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
   selector:
     matchLabels:
       app: config-server
@@ -17,14 +11,10 @@ spec:
     metadata:
       labels:
         app: config-server
-      annotations:
-        fluxcd.io/automated: "true"
-        fluxcd.io/image-ref.config-server: "config-server-policy"
     spec:
       containers:
         - name: config-server
-          image: davidunir945/spring-petclinic-config-server-test:3.2.16
-          imagePullPolicy: Always
+          image: davidunir945/spring-petclinic-config-server-test:%IMAGE_VERSION%
           ports:
             - containerPort: 8888
           env:

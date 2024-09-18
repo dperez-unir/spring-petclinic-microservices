@@ -1,7 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - config-server-deployment.yaml
-images:
-  - name: docker.io/davidunir945/spring-petclinic-config-server-test
-    newTag: 3.2.15

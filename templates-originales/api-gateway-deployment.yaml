@@ -2,14 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-gateway
-  namespace: default
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
   selector:
     matchLabels:
       app: api-gateway
@@ -17,14 +11,10 @@ spec:
     metadata:
       labels:
         app: api-gateway
-      annotations:
-        fluxcd.io/automated: "true"
-        fluxcd.io/image-ref.api-gateway: "api-gateway-policy"
     spec:
       containers:
         - name: api-gateway
           image: davidunir945/spring-petclinic-api-gateway-test:%IMAGE_VERSION%
-          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:

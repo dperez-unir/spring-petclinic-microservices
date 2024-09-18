@@ -1,32 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vets-service
-  namespace: default
+  name: customers-service
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
   selector:
     matchLabels:
-      app: vets-service
+      app: customers-service
   template:
     metadata:
       labels:
-        app: vets-service
-      annotations:
-        fluxcd.io/automated: "true"
-        fluxcd.io/image-ref.vets-service: "vets-service-policy"
+        app: customers-service
     spec:
       containers:
-        - name: vets-service
-          image: davidunir945/spring-petclinic-vets-test:3.2.16
-          imagePullPolicy: Always
+        - name: customers-service
+          image: davidunir945/spring-petclinic-customers-test:%IMAGE_VERSION%
           ports:
-            - containerPort: 8083
+            - containerPort: 8081
           env:
             - name: CONFIG_SERVER_URL
               value: "http://config-server:8888"
@@ -39,11 +29,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: vets-service
+  name: customers-service
 spec:
   type: ClusterIP
   ports:
-    - port: 8083
-      targetPort: 8083
+    - port: 8081
+      targetPort: 8081
   selector:
-    app: vets-service
+    app: customers-service
