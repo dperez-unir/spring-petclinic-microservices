@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: visits-service
+  name: api-gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: visits-service
+      app: api-gateway
   template:
     metadata:
       labels:
-        app: visits-service
+        app: api-gateway
     spec:
       containers:
-        - name: visits-service
-          image: davidunir945/spring-petclinic-visits-test
+        - name: api-gateway
+          image: davidunir945/spring-petclinic-api-gateway-test:%IMAGE_VERSION%
           ports:
-            - containerPort: 8082
+            - containerPort: 8080
           env:
             - name: CONFIG_SERVER_URL
               value: "http://config-server:8888"
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
               value: "http://discovery-server:8761/eureka/"
+            - name: ZIPKIN_BASE_URL
+              value: "http://tracing-server:9411"
           resources:
             limits:
               memory: "512Mi"
@@ -29,11 +31,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: visits-service
+  name: api-gateway
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
-    - port: 8082
-      targetPort: 8082
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
   selector:
-    app: visits-service
+    app: api-gateway

@@ -11,26 +11,26 @@
 
     <groupId>org.springframework.samples</groupId>
     <artifactId>spring-petclinic-microservices</artifactId>
-    <version>3.2.13</version>
+    <version>3.2.14</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
 
     <modules>
         <module>spring-petclinic-admin-server</module>
+        <module>spring-petclinic-api-gateway</module>
         <module>spring-petclinic-customers-service</module>
         <module>spring-petclinic-vets-service</module>
         <module>spring-petclinic-visits-service</module>
         <module>spring-petclinic-config-server</module>
         <module>spring-petclinic-discovery-server</module>
-        <module>spring-petclinic-api-gateway</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
-
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <chaos-monkey-spring-boot.version>3.1.0</chaos-monkey-spring-boot.version>
         <jolokia-core.version>1.7.1</jolokia-core.version>
+        <replacement.dir>${maven.multiModuleProjectDirectory}</replacement.dir>
 
         <!-- Workaround for resolving the issue while using the provided lombok dependency in upgraded Java version.
         Should be removed while future upgrading-->
@@ -212,5 +212,72 @@
             </build>
         </profile>
     </profiles>
+    <build>
+        <pluginManagement>
+            <!-- Definición de plugins para que los submódulos hereden -->
+            <plugins>
+                <!-- Plugin para reemplazar tokens -->
+                <plugin>
+                    <groupId>com.google.code.maven-replacer-plugin</groupId>
+                    <artifactId>replacer</artifactId>
+                    <version>1.5.3</version>
+                    <executions>
+                        <execution>
+                            <id>replace-tokens</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>replace</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <includes>
+                            <include>${replacement.dir}/k8s/*.yaml</include>
+                        </includes>
+                        <replacements>
+                            <replacement>
+                                <token>%IMAGE_VERSION%</token>
+                                <value>${project.version}</value>
+                            </replacement>
+                        </replacements>
+                    </configuration>
+                </plugin>
 
+                <!-- Otros plugins, por ejemplo, para copiar archivos -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <id>copy-yaml-files</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <copy todir="${replacement.dir}/k8s">
+                                        <fileset dir="${replacement.dir}/templates" includes="*.yaml"/>
+                                    </copy>
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- Aplicar plugins automáticamente a todos los módulos -->
+        <plugins>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

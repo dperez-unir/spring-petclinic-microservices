@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin-server
+  name: vets-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: admin-server
+      app: vets-service
   template:
     metadata:
       labels:
-        app: admin-server
+        app: vets-service
     spec:
       containers:
-        - name: admin-server
-          image: davidunir945/spring-petclinic-admin-server-test
+        - name: vets-service
+          image: davidunir945/spring-petclinic-vets-test:%IMAGE_VERSION%
           ports:
-            - containerPort: 9090
+            - containerPort: 8083
           env:
             - name: CONFIG_SERVER_URL
               value: "http://config-server:8888"
@@ -29,11 +29,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: admin-server
+  name: vets-service
 spec:
   type: ClusterIP
   ports:
-    - port: 9090
-      targetPort: 9090
+    - port: 8083
+      targetPort: 8083
   selector:
-    app: admin-server
+    app: vets-service
