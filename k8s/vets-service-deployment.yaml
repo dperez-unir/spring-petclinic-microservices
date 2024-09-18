@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: vets-service
-          image: davidunir945/spring-petclinic-vets-test:3.2.16
+          image: davidunir945/spring-petclinic-vets-test:3.2.17
           imagePullPolicy: Always
           ports:
             - containerPort: 8083
