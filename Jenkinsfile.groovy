@@ -28,6 +28,8 @@ pipeline {
                 script {
                     // Empuja los cambios al repositorio
                     withCredentials([usernamePassword(credentialsId: '1d65426d-86d5-4860-af62-6afbcbb50317', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh 'git add .'
+                        sh 'git commit -am "subida de version"'
                         sh 'git config user.email "tu-email@ejemplo.com"'
                         sh 'git config user.name "Tu Nombre"'
                         sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dperez-unir/spring-petclinic-microservices.git HEAD:main'
