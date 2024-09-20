@@ -1,0 +1,62 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: admin-server-images
+  namespace: flux-system
+spec:
+  image: docker.io/davidunir945/spring-petclinic-admin-server-test
+  interval: 1m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: api-gateway-images
+  namespace: flux-system
+spec:
+  image: docker.io/davidunir945/spring-petclinic-api-gateway-test
+  interval: 1m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: config-server-images
+  namespace: flux-system
+spec:
+  image: docker.io/davidunir945/spring-petclinic-config-server-test
+  interval: 1m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: customers-service-images
+  namespace: flux-system
+spec:
+  image: docker.io/davidunir945/spring-petclinic-customers-test
+  interval: 1m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: discovery-server-images
+  namespace: flux-system
+spec:
+  image: docker.io/davidunir945/spring-petclinic-discovery-server-test
+  interval: 1m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: vets-service-images
+  namespace: flux-system
+spec:
+  image: docker.io/davidunir945/spring-petclinic-vets-test
+  interval: 1m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: visits-service-images
+  namespace: flux-system
+spec:
+  image: docker.io/davidunir945/spring-petclinic-visits-test
+  interval: 1m

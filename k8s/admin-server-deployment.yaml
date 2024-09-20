@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-server
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: admin-server
+  template:
+    metadata:
+      labels:
+        app: admin-server
+      annotations:
+        fluxcd.io/automated: "true"
+        fluxcd.io/image-ref.admin-server: "admin-server-policy"
+    spec:
+      containers:
+        - name: admin-server
+          image: davidunir945/spring-petclinic-admin-server-test:3.2.17
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090
+          env:
+            - name: CONFIG_SERVER_URL
+              value: "http://config-server:8888"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://discovery-server:8761/eureka/"
+          resources:
+            limits:
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-server
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9090
+      targetPort: 9090
+  selector:
+    app: admin-server

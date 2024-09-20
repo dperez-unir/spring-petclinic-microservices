@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers-service
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: customers-service
+  template:
+    metadata:
+      labels:
+        app: customers-service
+      annotations:
+        fluxcd.io/automated: "true"
+        fluxcd.io/image-ref.customers-service: "customers-service-policy"
+    spec:
+      containers:
+        - name: customers-service
+          image: davidunir945/spring-petclinic-customers-test:3.2.17
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          env:
+            - name: CONFIG_SERVER_URL
+              value: "http://config-server:8888"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://discovery-server:8761/eureka/"
+          resources:
+            limits:
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customers-service
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8081
+      targetPort: 8081
+  selector:
+    app: customers-service

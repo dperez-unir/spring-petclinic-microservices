@@ -1,14 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Check Environment Variables') {
-            steps {
-                script {
-                    // Imprime todas las variables de entorno
-                    sh 'env'
-                }
-            }
-        }
 
 //        stage('Update Maven Versions') {
 //            steps {
