@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-server
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: discovery-server
+  template:
+    metadata:
+      labels:
+        app: discovery-server
+      annotations:
+        fluxcd.io/automated: "true"
+        fluxcd.io/image-ref.discovery-server: "discovery-server-policy"
+    spec:
+      containers:
+        - name: discovery-server
+          image: davidunir945/spring-petclinic-discovery-server-test:3.2.35
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8761
+          resources:
+            limits:
+              memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8761
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8761
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: discovery-server
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 8761
+      targetPort: 8761
+      nodePort: 30081
+  selector:
+    app: discovery-server
