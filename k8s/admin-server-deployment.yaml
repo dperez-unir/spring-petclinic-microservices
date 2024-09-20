@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: admin-server
-          image: davidunir945/spring-petclinic-admin-server-test:3.2.36
+          image: davidunir945/spring-petclinic-admin-server-test:3.2.37
           imagePullPolicy: Always
           ports:
             - containerPort: 9090
