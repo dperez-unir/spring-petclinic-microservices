@@ -10,17 +10,17 @@ pipeline {
             }
         }
 
-        stage('Update Maven Versions') {
-            steps {
-                script {
-                    // Usa el plugin de Maven Versions para cambiar la versión de todos los poms
-                    sh 'mvn versions:set -DnewVersion=`mvn help:evaluate -Dexpression=project.version | grep -v "\\[INFO\\]" | awk -F \'.\' \'{print $1"."$2"."$3+1}\'`'
-
-                    // Commit los cambios con un mensaje de commit adecuado
-                    sh 'git commit -am "Subida de versión"'
-                }
-            }
-        }
+//        stage('Update Maven Versions') {
+//            steps {
+//                script {
+//                    // Usa el plugin de Maven Versions para cambiar la versión de todos los poms
+//                    sh 'mvn versions:set -DnewVersion=`mvn help:evaluate -Dexpression=project.version | grep -v "\\[INFO\\]" | awk -F \'.\' \'{print $1"."$2"."$3+1}\'`'
+//
+//                    // Commit los cambios con un mensaje de commit adecuado
+//                    sh 'git commit -am "Subida de versión"'
+//                }
+//            }
+//        }
 
         stage('Build') {
             steps {
