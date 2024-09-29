@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: visits-service
-          image: davidunir945/spring-petclinic-visits-test:3.2.39
+          image: davidunir945/spring-petclinic-visits-test:3.2.41
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
