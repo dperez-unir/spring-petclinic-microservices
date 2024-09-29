@@ -4,22 +4,15 @@ pipeline {
         stage('Check Last Commit Message') {
             steps {
                 script {
-                    def lastCommitMessage = ""
-                    def changeLogSets = currentBuild.changeSets
-
-                    // Recorremos los cambios pero solo tomamos el primer commit (el más reciente)
-                    for (int i = 0; i < changeLogSets.size(); i++) {
-                        def entries = changeLogSets[i].items
-                        if (entries.length > 0) {
-                            // Recuperamos solo el mensaje del primer commit más reciente
-                            lastCommitMessage = entries[0].msg
-                            break
-                        }
-                    }
+                    // Obtiene el mensaje del último commit directamente desde Git
+                    def lastCommitMessage = sh(
+                            script: "git log -1 --pretty=%B",
+                            returnStdout: true
+                    ).trim()
 
                     echo "Último mensaje de commit: ${lastCommitMessage}"
 
-                    // Verificamos si contiene la frase que deseas ignorar
+                    // Verifica si contiene la frase que deseas ignorar
                     if (lastCommitMessage.contains("subida de version Jenkins")) {
                         currentBuild.result = 'ABORTED'
                         error("Build aborted due to Jenkins auto-commit.")
