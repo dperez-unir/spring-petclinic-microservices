@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: customers-service
-          image: davidunir945/spring-petclinic-customers-test:3.2.40
+          image: davidunir945/spring-petclinic-customers-test:3.2.41
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
