@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: discovery-server
-          image: davidunir945/spring-petclinic-discovery-server-test:3.2.45
+          image: davidunir945/spring-petclinic-discovery-server-test:3.2.46
           imagePullPolicy: Always
           ports:
             - containerPort: 8761
