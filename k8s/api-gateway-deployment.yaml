@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: davidunir945/spring-petclinic-api-gateway-test:3.2.44
+          image: davidunir945/spring-petclinic-api-gateway-test:3.2.45
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
