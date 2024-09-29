@@ -10,4 +10,4 @@ resources:
   - visits-service-deployment.yaml
 images:
   - name: docker.io/davidunir945/spring-petclinic-config-server-test
-    newTag: 3.2.45
+    newTag: 3.2.46
